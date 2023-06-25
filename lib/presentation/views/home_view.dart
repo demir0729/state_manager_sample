@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:state_manager_sample/business_logic/color_cubit/color_cubit.dart';
 import 'package:state_manager_sample/business_logic/internet_counter/internet_cubit.dart';
 import 'package:state_manager_sample/constants/enums.dart';
 import 'package:state_manager_sample/presentation/views/second_view.dart';
 
 import '../../business_logic/counter_cubit/counter_cubit.dart';
+import '../widgets/color_card_widget.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -17,34 +19,31 @@ class HomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<CounterCubit, CounterState>(
+            BlocBuilder<ColorCubit, ColorState>(
               builder: (context, state) {
-                return Text(
-                  state.countValue.toString(),
-                  style: Theme.of(context).textTheme.displaySmall,
+                return Card(
+                  color: state.color,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
+                  child: BlocBuilder<CounterCubit, CounterState>(
+                    builder: (context, state) {
+                      return SizedBox(
+                        width: 80,
+                        height: 80,
+                        child: Center(
+                          child: Text(
+                            state.countValue.toString(),
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 );
               },
             ),
             const SizedBox(
               height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).increment();
-                  },
-                  icon: const Icon(Icons.add),
-                ),
-                const SizedBox(width: 20),
-                IconButton(
-                  onPressed: () {
-                    BlocProvider.of<CounterCubit>(context).decrement();
-                  },
-                  icon: const Icon(Icons.remove),
-                ),
-              ],
             ),
             BlocBuilder<InternetCubit, InternetState>(
               builder: (context, state) {
@@ -67,7 +66,35 @@ class HomeView extends StatelessWidget {
                 }
                 return const CircularProgressIndicator();
               },
-            )
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ColorCard(
+                  color: Colors.red,
+                ),
+                ColorCard(
+                  color: Colors.blue,
+                ),
+                ColorCard(
+                  color: Colors.green,
+                ),
+              ],
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ColorCard(
+                  color: Colors.orange,
+                ),
+                ColorCard(
+                  color: Colors.purple,
+                ),
+                ColorCard(
+                  color: Colors.yellow,
+                ),
+              ],
+            ),
           ],
         ),
       ),

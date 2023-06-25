@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:state_manager_sample/business_logic/color_cubit/color_cubit.dart';
 import 'package:state_manager_sample/business_logic/counter_cubit/counter_cubit.dart';
 import 'package:state_manager_sample/business_logic/internet_counter/internet_cubit.dart';
 import 'package:state_manager_sample/constants/enums.dart';
@@ -10,7 +11,9 @@ void main() {
   group('CounterCubit', () {
     CounterCubit? counterCubit;
     setUp(() => counterCubit = CounterCubit(
-        internetCubit: InternetCubit(connectivity: Connectivity())));
+          internetCubit: InternetCubit(connectivity: Connectivity()),
+          colorCubit: ColorCubit(),
+        ));
 
     tearDown(() => counterCubit!.close());
 
