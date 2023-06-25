@@ -60,9 +60,10 @@ class HomeView extends StatelessWidget {
                         ));
                       },
                       child: const Text('go to second view'));
-                } else {
-                  const ElevatedButton(
-                      onPressed: null, child:  Text('connection error'));
+                } else if (state is WifiOrMobileState &&
+                    state.isConnected == IsConnected.no) {
+                  return const ElevatedButton(
+                      onPressed: null, child: Text('connection error'));
                 }
                 return const CircularProgressIndicator();
               },

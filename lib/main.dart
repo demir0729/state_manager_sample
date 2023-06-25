@@ -21,11 +21,12 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => CounterCubit(),
+          create: (context) => InternetCubit(connectivity: Connectivity()),
         ),
         BlocProvider(
-          create: (context) => InternetCubit(connectivity: Connectivity()),
-        )
+          create: (context) => CounterCubit(
+              internetCubit: BlocProvider.of<InternetCubit>(context)),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData().copyWith(useMaterial3: true),
