@@ -1,9 +1,11 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:state_manager_sample/business_logic/internet_counter/internet_cubit.dart';
 import 'package:state_manager_sample/presentation/views/home_view.dart';
 
-import 'business_logic/cubit/counter_cubit.dart';
+import 'business_logic/counter_cubit/counter_cubit.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,12 +18,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData().copyWith(useMaterial3: true),
-      debugShowCheckedModeBanner: false,
-      home: BlocProvider(
-        create: (context) => CounterCubit(),
-        child: const HomeView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CounterCubit(),
+        ),
+        BlocProvider(
+          create: (context) => InternetCubit(connectivity: Connectivity()),
+        )
+      ],
+      child: MaterialApp(
+        theme: ThemeData().copyWith(useMaterial3: true),
+        debugShowCheckedModeBanner: false,
+        home: const HomeView(),
       ),
     );
   }

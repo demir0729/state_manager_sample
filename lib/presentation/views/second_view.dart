@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../business_logic/cubit/counter_cubit.dart';
+import '../../business_logic/counter_cubit/counter_cubit.dart';
+
 
 class SecondView extends StatefulWidget {
   const SecondView({super.key});

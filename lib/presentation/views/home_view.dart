@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:state_manager_sample/business_logic/internet_counter/internet_cubit.dart';
+import 'package:state_manager_sample/constants/enums.dart';
 import 'package:state_manager_sample/presentation/views/second_view.dart';
 
-import '../../business_logic/cubit/counter_cubit.dart';
+import '../../business_logic/counter_cubit/counter_cubit.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -44,16 +46,27 @@ class HomeView extends StatelessWidget {
                 ),
               ],
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => BlocProvider.value(
-                      value: BlocProvider.of<CounterCubit>(context),
-                      child: const SecondView(),
-                    ),
-                  ));
-                },
-                child: const Text('go to second view'))
+            BlocBuilder<InternetCubit, InternetState>(
+              builder: (context, state) {
+                if (state is WifiOrMobileState &&
+                    state.isConnected == IsConnected.yes) {
+                  return ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => BlocProvider.value(
+                            value: BlocProvider.of<CounterCubit>(context),
+                            child: const SecondView(),
+                          ),
+                        ));
+                      },
+                      child: const Text('go to second view'));
+                } else {
+                  const ElevatedButton(
+                      onPressed: null, child:  Text('connection error'));
+                }
+                return const CircularProgressIndicator();
+              },
+            )
           ],
         ),
       ),
