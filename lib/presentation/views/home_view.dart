@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:state_manager_sample/business_logic/color_cubit/color_cubit.dart';
 import 'package:state_manager_sample/business_logic/internet_counter/internet_cubit.dart';
-import 'package:state_manager_sample/constants/enums.dart';
+import 'package:state_manager_sample/core/constants/enums.dart';
 import 'package:state_manager_sample/presentation/views/second_view.dart';
 
 import '../../business_logic/counter_cubit/counter_cubit.dart';

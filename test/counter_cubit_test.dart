@@ -4,13 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:state_manager_sample/business_logic/color_cubit/color_cubit.dart';
 import 'package:state_manager_sample/business_logic/counter_cubit/counter_cubit.dart';
 import 'package:state_manager_sample/business_logic/internet_counter/internet_cubit.dart';
-import 'package:state_manager_sample/constants/enums.dart';
+import 'package:state_manager_sample/core/cache/hive_cache.dart';
+import 'package:state_manager_sample/core/constants/enums.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('CounterCubit', () {
     CounterCubit? counterCubit;
     setUp(() => counterCubit = CounterCubit(
+          countCacheManager: CountCacheManager(),
           internetCubit: InternetCubit(connectivity: Connectivity()),
           colorCubit: ColorCubit(),
         ));
